@@ -3,7 +3,8 @@ from tempfile import mkdtemp
 from selenium.webdriver.common.by import By
 
 
-def handler(event=None, context=None):
+def handler(event, context):
+    url = event.get('url', 'https://www.example.com')
     options = webdriver.ChromeOptions()
     service = webdriver.ChromeService("/opt/chromedriver")
 
@@ -22,6 +23,6 @@ def handler(event=None, context=None):
     options.add_argument("--remote-debugging-port=9222")
 
     chrome = webdriver.Chrome(options=options, service=service)
-    chrome.get("https://example.com/")
+    chrome.get(url)
 
     return chrome.find_element(by=By.XPATH, value="//html").text
